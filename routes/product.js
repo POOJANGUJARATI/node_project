@@ -13,6 +13,7 @@ router.get('/recent', authenticate,types.mostrecent)
 
 router.post('/:productID/comment',authenticate,types.comments)
 router.post('/like',types.like)
+router.post('/dislike',types.dislike)
 router.get('/most_like',types.mostLike)
 // router.post('/:typeID/type',types.getproductbytype)
 router.get('/:id/bytype',authenticate,types.bytype)

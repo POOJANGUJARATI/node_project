@@ -171,6 +171,42 @@ const like = async (req, res) =>{
         })
     }
 }
+const dislike = async (req, res) =>{
+    // console.log(req.body.productID + " " +  req.body.customer_id)        
+    const check = await likes.findOne({ $and: [{ product_id: req.body.productID }, { customer_id: req.body.customer_id }]});
+    if(check === null)
+    {
+        res.json({
+            message : "you havn't liked this product"
+        })
+    }
+    else{  
+        const products = await product.findByIdAndUpdate({_id : req.body.productID},{ $inc : {likes : -1}})
+        const like_product = await likes.findOneAndRemove({ $and: [{ product_id: req.body.productID }, { customer_id: req.body.customer_id }]}) 
+
+        // like_product.product_id = req.body.productID;
+        // like_product.customer_id = req.body.customer_id;
+        // await like_product.save()
+        // await products.save()
+        .then(() =>{
+            res.json({
+                message :"You disLiked this post"
+            })
+        })
+        .catch(error =>{
+            res.json({
+                message : "error occured" 
+            })
+        })
+    }
+    // else{
+    //     res.json({
+    //         message :"You Already Liked on this post"
+    //     })
+    // }
+}
+
+
 // const getproductbytype = async (req,res) =>{
 //     // const bytype = await producttype.find({"_id" : req.params.typeID}).populate("products")
 //     // res.json(bytype)
@@ -224,4 +260,4 @@ const bytype = async (req,res) =>{
         Output : data
     })
 }
-module.exports = {index,savetype,saveproduct,getproduct,updateproduct,deleteproduct,mostrecent,comments,bytype,like,mostLike};  
+module.exports = {index,savetype,saveproduct,getproduct,updateproduct,deleteproduct,mostrecent,comments,bytype,like,mostLike,dislike};  
