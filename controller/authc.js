@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken')
 const { Mongoose } = require('mongoose')
 
 const register = (req, res) => {
+     if ((req.body.password).length >= 8 && (req.body.password).length <= 25){
+          // console.log("ss")
      bcrypt.hash(req.body.password, 10, function (err, hashedpass) {
           if (err) {
                res.json({
@@ -26,13 +28,18 @@ const register = (req, res) => {
                })
           })
      })
+     }else{
+          res.json({
+               message : "password length does not validate"
+          })
+     }
 }
 
 const login = (req, res) => {
      var username = req.body.username
      var password = req.body.password
 
-     User.findOne({ $or: [{ email: username }, { phone: password }] }).then(user => {
+     User.findOne({ $or: [{ email: username }, { phone: username }] }).then(user => {
           if (user) {
                bcrypt.compare(password, user.password, function (err, result) {
                     if (err) {

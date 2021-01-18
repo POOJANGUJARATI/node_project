@@ -5,7 +5,8 @@ const productTypechema = new Schema({
      type : {
           type : String,
           required : true,
-          trim : true
+          trim : true,
+          unique : true
      },
      product_type : [{
           type : mongoose.Schema.Types.ObjectId,

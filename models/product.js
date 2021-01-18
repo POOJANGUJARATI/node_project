@@ -1,15 +1,44 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
+let namelengthcheck = (name) => {
+    if (!name) {
+      return false; 
+    } else {
+      if (name.length < 5 || name.length > 50) {
+        return false; 
+      } else {
+        return true; 
+      }
+    }
+  };
+  
+  let desclengthcheck = (desc) => {
+    if (!desc) {
+      return false; 
+    } else {
+      if (desc.length < 5 || desc.length > 500) {
+        return false; 
+      } else {
+        return true; 
+      }
+    }
+  };
+  
+
 const product = new Schema({
     name: {
         type: String,
+        unique: true,
         required: true,
-        trim: true
+        trim: true,
+        validate : namelengthcheck
+        
     },
     desc : {
         type: String,
-        required: true
+        required: true,
+        validate : desclengthcheck,
     },
     price : {
         type: Number,

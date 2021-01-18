@@ -117,7 +117,7 @@ const deleteproduct = (req, res) =>{
 }
 
 const mostrecent = async (req, res) =>{
-    const data  = await product.find({}).sort({_id : -1}).limit(3)
+    const data  = await product.find({}).sort({_id : -1}).limit(5)
     res.json({
         Output : data
     })
