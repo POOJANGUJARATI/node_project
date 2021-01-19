@@ -3,7 +3,7 @@ const router = express.Router()
 const types = require('../controller/typec')
 const authenticate = require('../middleware/authenticate') 
 
-router.get('/home',authenticate ,types.index);
+router.get('/gettype',authenticate ,types.index);
 router.post('/stype',authenticate, types.savetype)
 router.post('/saveproduct', types.saveproduct)
 router.get('/getproducts',authenticate, types.getproduct)
